@@ -254,7 +254,7 @@ a:hover {
 .form-group input,
 .form-group textarea {
   width: 100%;
-  padding: 10px 12px;
+  padding: 1px 12px;
   background-color: #16162a;
   border: 1px solid #7b2fff;
   border-radius: 4px;
@@ -274,7 +274,7 @@ a:hover {
   background-color: #7b2fff;
   color: #ffffff;
   border: none;
-  padding: 12px 28px;
+  padding: 10px 28px;
   border-radius: 4px;
   font-size: 1.4rem;
   cursor: pointer;
@@ -297,3 +297,8 @@ a:hover {
 
 .form-success { color: #6bff8f; }
 .form-error { color: #ff6b6b; }
+
+.h-captcha {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
