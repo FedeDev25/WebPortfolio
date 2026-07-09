@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <link rel="stylesheet" href="style.css">
+    <title>Il mio portfolio</title>
+  </head>
+<body>
+
+  <!-- INTESTAZIONE -->
+  <header>
+    <h1>Fed_Dev</h1>
+    <p>Scenari Virtuali - Modellazione 3D - Virtual Reality</p>
+  </header>
+
+  <!-- CHI SONO -->
+  <section id="about">
+    <h2>CHI SONO</h2>
+    <p>
+      Ciao, sono Federico! Sviluppo scenari virtuali e modelli 3D in diversi ambiti. Utilizzo Blender, Unity e Unreal Engine e sviluppare progetti in ambito storico-culturale mi motiva ancora di più!
+    </p>
+  </section>
+
+  <!-- PROGETTI -->
+ <section id="projects">
+  <h2>PROGETTI</h2>
+
+<div class="project">
+  <h3>Ricostruzione VR – Abbazia di Chiaravalle (XIII secolo)</h3>
+  <p><strong>Descrizione:</strong></p>
+  <p>
+    Ricostruzione virtuale dell'Abbazia di Chiaravalle Milanese così come 
+    appariva nel XIII secolo, sviluppata per Meta Quest 3 nell'ambito 
+    di un tirocinio curricolare presso Koinè Cooperativa Sociale ONLUS, ente 
+    gestore dell'Abbazia.
+  </p>
+  <p><strong>Software:</strong> </p>
+  <ul>
+    <li>Blender (modellazione, PBR shading, UV mapping)</li>
+    <li>Unity (scenario virtuale per VR)</li>
+  </ul>
+</div>
+
+  <div class="carousel" data-interval="4000">
+    <div class="carousel-track">
+      <img src="images/chiaravalle-wireframe.jpg" alt="Wireframe">
+      <img src="images/chiaravalle-solid.jpg" alt="Solid">
+      <img src="images/chiaravalle-render.jpg" alt="Texture">
+    </div>
+    <button class="carousel-arrow carousel-prev" aria-label="Immagine precedente">&#10094;</button>
+    <button class="carousel-arrow carousel-next" aria-label="Immagine successiva">&#10095;</button>
+    <div class="carousel-dots"></div>
+  </div>
+
+<div class="video-showcase">
+  <h3>Cinematic</h3>
+  <video src="images/render_clean.mp4" controls preload="metadata" poster="images/chiaravalle-render.jpg"></video>
+</div>
+
+</section>
+
+ <!-- CONTATTI -->
+<section id="contacts">
+  <h2>Contatti</h2>
+  <form id="contact-form">
+    <input type="hidden" name="access_key" value="99866d2e-6ae4-49b9-961b-0f9613bfbe29">
+    <input type="hidden" name="subject" value="Nuovo messaggio dal portfolio">
+
+    <div class="form-group">
+      <label for="name">Nome</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">La tua email</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+
+    <div class="form-group">
+      <label for="message">Messaggio</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
+    </div>
+
+    <!-- Honeypot anti-spam: i bot lo compilano, gli utenti reali no perché è invisibile -->
+    <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+
+    <button type="submit">Invia messaggio</button>
+    
+    <!-- h-captcha -->
+    <div class="h-captcha" data-captcha="true" data-theme="dark" data-size="compact"></div>
+  </form>
+  <p id="form-status"></p>
+</section>
+
+  <!-- LIGHTBOX -->
+<div id="lightbox" class="lightbox">
+  <span class="lightbox-close">&times;</span>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+  // LIGHTBOX
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+
+  document.querySelectorAll('.carousel-track img').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightbox.classList.add('active');
+    });
+  });
+
+  lightbox.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') lightbox.classList.remove('active');
+  });
+
+  // CAROSELLO
+  document.querySelectorAll('.carousel').forEach(carousel => {
+    const track = carousel.querySelector('.carousel-track');
+    const slides = Array.from(track.children);
+    const dotsWrap = carousel.querySelector('.carousel-dots');
+    const prevBtn = carousel.querySelector('.carousel-prev');
+    const nextBtn = carousel.querySelector('.carousel-next');
+    const intervalMs = parseInt(carousel.dataset.interval, 10) || 4000;
+    let index = 0;
+    let timer = null;
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.setAttribute('aria-label', `Vai all'immagine ${i + 1}`);
+      if (i === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(dot);
+    });
+    const dots = Array.from(dotsWrap.children);
+
+    function render() {
+      slides.forEach((slide, i) => {
+        let offset = i - index;
+        // normalizza l'offset per il loop (es. dall'ultima alla prima slide il salto è minimo)
+        if (offset > slides.length / 2) offset -= slides.length;
+        if (offset < -slides.length / 2) offset += slides.length;
+
+        const abs = Math.abs(offset);
+        const x = offset * 65; // % di spostamento orizzontale, ben distanziate ai lati
+        const z = -abs * 200; // profondità leggera, non scompaiono dietro al centro
+        const rotY = offset * -1; // rotazione 3D moderata
+        const scale = 1 - abs * 0.16;
+        const opacity = abs > 2 ? 0 : 1 - abs * 0.3;
+
+        slide.style.transform = `translateX(${x}%) translateZ(${z}px) rotateY(${rotY}deg) scale(${scale})`;
+        slide.style.opacity = opacity;
+        slide.style.zIndex = slides.length - abs;
+        slide.style.pointerEvents = abs === 0 ? 'auto' : 'none';
+      });
+      dots.forEach(d => d.classList.remove('active'));
+      dots[index].classList.add('active');
+    }
+
+    function goTo(i) {
+      index = (i + slides.length) % slides.length;
+      render();
+    }
+
+    function next() { goTo(index + 1); }
+    function prev() { goTo(index - 1); }
+
+    function startAuto() {
+      stopAuto();
+      // Rispetta chi preferisce meno animazioni: niente scorrimento automatico
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      timer = setInterval(next, intervalMs);
+    }
+    function stopAuto() {
+      if (timer) clearInterval(timer);
+    }
+
+    nextBtn.addEventListener('click', () => { next(); startAuto(); });
+    prevBtn.addEventListener('click', () => { prev(); startAuto(); });
+
+    // Pausa al passaggio del mouse o quando la scheda non è visibile
+    carousel.addEventListener('mouseenter', stopAuto);
+    carousel.addEventListener('mouseleave', startAuto);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stopAuto(); else startAuto();
+    });
+
+    render();
+    startAuto();
+  });
+
+ // FORM CONTATTI — invio via Web3Forms senza reload pagina
+const contactForm = document.getElementById('contact-form');
+const formStatus = document.getElementById('form-status');
+
+contactForm.addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const submitBtn = contactForm.querySelector('button[type="submit"]');
+  submitBtn.disabled = true;
+  formStatus.textContent = 'Invio in corso...';
+  formStatus.className = '';
+
+  const formData = new FormData(contactForm);
+
+  try {
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: formData
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      formStatus.textContent = 'Messaggio inviato! Ti risponderò al più presto.';
+      formStatus.className = 'form-success';
+      contactForm.reset();
+    } else {
+      throw new Error(result.message || 'Errore sconosciuto');
+    }
+  } catch (error) {
+    formStatus.textContent = 'Errore nell\'invio. Riprova o scrivimi direttamente.';
+    formStatus.className = 'form-error';
+  } finally {
+    submitBtn.disabled = false;
+  }
+});
+</script>
+
+<!-- h-captcha script -->
+<script src="https://web3forms.com/client/script.js" async defer></script>
+</body>
+</html>
