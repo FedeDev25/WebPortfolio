@@ -1,0 +1,24 @@
+# File di sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# File temporanei/backup di editor
+*~
+*.bak
+*.tmp
+*.swp
+
+# Eventuali file di configurazione locale con dati sensibili
+.env
+secrets.json
+config.local.js
+
+# Se mai finissero per sbaglio in questa cartella file di progetto 3D
+*.blend1
+*.blend2
+*.blend
+*.unitypackage
+Library/
+Temp/
+obj/
