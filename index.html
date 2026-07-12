@@ -12,6 +12,9 @@
   <!-- LANGUAGE TOGGLE -->
   <button id="lang-toggle" aria-label="Switch language">EN</button>
 
+  <!-- HOME BUTTON -->
+  <button id="back-home" aria-label="Torna alla home">Home</button>
+
   <!-- INTESTAZIONE -->
   <header>
     <h1>Fed_Dev</h1>
@@ -340,6 +343,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
   applyLanguage(currentLang);
 });
+</script>
+
+<!-- Home page button recall -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const backHomeBtn = document.getElementById('back-home');
+
+  backHomeBtn.addEventListener('click', function () {
+    window.location.href = 'index.html';
+  });
+});
+</script>
 </script>
 
 </body>
