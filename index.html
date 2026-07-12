@@ -19,7 +19,7 @@
   <section id="about">
     <h2>CHI SONO</h2>
     <p>
-      Ciao, sono Federico! Sviluppo scenari virtuali e modelli 3D in diversi ambiti. Utilizzo Blender, Unity e Unreal Engine e sviluppare progetti in ambito storico-culturale mi motiva ancora di più!
+      Ciao, sono Federico! Sviluppo scenari virtuali e modelli 3D in diversi ambiti.<br>Utilizzo Blender, Unity e Unreal Engine e adoro sviluppare progetti in ambito storico-culturale!
     </p>
   </section>
 
@@ -28,18 +28,19 @@
   <h2>PROGETTI</h2>
 
 <div class="project">
-  <h3>Ricostruzione VR – Abbazia di Chiaravalle (XIII secolo)</h3>
-  <p><strong>Descrizione:</strong></p>
+  <h3>Ricostruzione VR – Abbazia di Chiaravalle (1200 CE)</h3>
+  <h2>Descrizione:</h2>
   <p>
     Ricostruzione virtuale dell'Abbazia di Chiaravalle Milanese così come 
     appariva nel XIII secolo, sviluppata per Meta Quest 3 nell'ambito 
     di un tirocinio curricolare presso Koinè Cooperativa Sociale ONLUS, ente 
     gestore dell'Abbazia.
   </p>
-  <p><strong>Software:</strong> </p>
+  
+  <h2>Software utilizzati:</h2>
   <ul>
-    <li>Blender (modellazione, PBR shading, UV mapping)</li>
-    <li>Unity (scenario virtuale per VR)</li>
+    <li>Blender</li>
+    <li>Unity</li>
   </ul>
 </div>
 
@@ -55,7 +56,7 @@
   </div>
 
 <div class="video-showcase">
-  <h3>Cinematic</h3>
+  <h3></h3>
   <video src="images/render_clean.mp4" controls preload="metadata" poster="images/chiaravalle-render.jpg"></video>
 </div>
 
@@ -84,12 +85,17 @@
     </div>
 
     <!-- Honeypot anti-spam: i bot lo compilano, gli utenti reali no perché è invisibile -->
-    <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+     <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
 
     <!-- h-captcha -->
-    <div class="h-captcha" data-captcha="true" data-theme="dark" data-size="normal"></div>
+    <div class="h-captcha" 
+         data-captcha="true" 
+         data-theme="dark" 
+         data-size="normal"
+         data-callback="onCaptchaSuccess"
+         data-expired-callback="onCaptchaExpired"></div>
 
-    <button type="submit">Invia messaggio</button>
+    <button type="submit" id="submit-btn" disabled>Invia messaggio</button>
   </form>
   <p id="form-status"></p>
 </section>
@@ -236,5 +242,36 @@ contactForm.addEventListener('submit', async function(e) {
 
 <!-- h-captcha script -->
 <script src="https://web3forms.com/client/script.js" async defer></script>
+
+<!-- Scroll % indicator -->
+<div class="scroll-progress-container" aria-hidden="true">
+  <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+</div>
+<div class="scroll-progress-label" id="scrollProgressLabel">0%</div>
+<script>
+  (function () {
+  const bar = document.getElementById('scrollProgressBar');
+  const label = document.getElementById('scrollProgressLabel');
+
+  function updateScrollProgress() {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+
+    // Evita divisioni per zero se la pagina è più corta della viewport
+    const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    const clamped = Math.min(100, Math.max(0, percent));
+
+    bar.style.width = clamped + '%';
+    label.textContent = Math.round(clamped) + '%';
+  }
+
+  // scroll passivo per non bloccare il thread principale (performance)
+  window.addEventListener('scroll', updateScrollProgress, { passive: true });
+  window.addEventListener('resize', updateScrollProgress, { passive: true });
+
+  updateScrollProgress(); // stato iniziale al caricamento
+})();
+</script>
+
 </body>
 </html>
