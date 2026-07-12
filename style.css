@@ -367,3 +367,24 @@ a:hover {
   z-index: 2000;
   pointer-events: none; /* non intercetta click */
 }
+
+#lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 5rem; /* spazio sufficiente per non sovrapporsi alla label scroll a destra */
+  background-color: rgba(18, 16, 24, 0.7);
+  color: #E6E4ED;
+  border: 0.0625rem solid #4C3575;
+  border-radius: 0.25rem;
+  padding: 0.4rem 0.8rem;
+  font-family: 'Exo 2', Arial;
+  font-size: 0.9rem;
+  cursor: pointer;
+  z-index: 2001; /* sopra allo scroll indicator (2000) */
+  transition: border-color 0.2s, color 0.2s;
+}
+
+#lang-toggle:hover {
+  border-color: #7C3AED;
+  color: #A78BFA;
+}

@@ -9,35 +9,38 @@
   </head>
 <body>
 
+  <!-- LANGUAGE TOGGLE -->
+  <button id="lang-toggle" aria-label="Switch language">EN</button>
+
   <!-- INTESTAZIONE -->
   <header>
     <h1>Fed_Dev</h1>
-    <p>Scenari Virtuali - Modellazione 3D - Virtual Reality</p>
+    <p data-i18n="header_subtitle">Scenari Virtuali - Modellazione 3D - Virtual Reality</p>
   </header>
 
   <!-- CHI SONO -->
   <section id="about">
-    <h2>CHI SONO</h2>
-    <p>
+    <h2 data-i18n="about_title">CHI SONO</h2>
+    <p data-i18n="about_text">
       Ciao, sono Federico! Sviluppo scenari virtuali e modelli 3D in diversi ambiti.<br>Utilizzo Blender, Unity e Unreal Engine e adoro sviluppare progetti in ambito storico-culturale!
     </p>
   </section>
 
   <!-- PROGETTI -->
  <section id="projects">
-  <h2>PROGETTI</h2>
+  <h2 data-i18n="projects_title">PROGETTI</h2>
 
 <div class="project">
-  <h3>Ricostruzione VR – Abbazia di Chiaravalle (1200 CE)</h3>
-  <h2>Descrizione:</h2>
-  <p>
+  <h3 data-i18n="project1_title">Ricostruzione VR – Abbazia di Chiaravalle (1200 CE)</h3>
+  <h2 data-i18n="label_description">Descrizione:</h2>
+  <p data-i18n="project1_desc">
     Ricostruzione virtuale dell'Abbazia di Chiaravalle Milanese così come 
     appariva nel XIII secolo, sviluppata per Meta Quest 3 nell'ambito 
     di un tirocinio curricolare presso Koinè Cooperativa Sociale ONLUS, ente 
     gestore dell'Abbazia.
   </p>
   
-  <h2>Software utilizzati:</h2>
+  <h2 data-i18n="label_software">Software utilizzati:</h2>
   <ul>
     <li>Blender</li>
     <li>Unity</li>
@@ -50,8 +53,8 @@
       <img src="images/chiaravalle-solid.jpg" alt="Solid">
       <img src="images/chiaravalle-render.jpg" alt="Texture">
     </div>
-    <button class="carousel-arrow carousel-prev" aria-label="Immagine precedente">&#10094;</button>
-    <button class="carousel-arrow carousel-next" aria-label="Immagine successiva">&#10095;</button>
+    <button class="carousel-arrow carousel-prev" data-i18n-aria="carousel_prev" aria-label="Immagine precedente">&#10094;</button>
+    <button class="carousel-arrow carousel-next" data-i18n-aria="carousel_next" aria-label="Immagine successiva">&#10095;</button>
     <div class="carousel-dots"></div>
   </div>
 
@@ -64,23 +67,23 @@
 
  <!-- CONTATTI -->
 <section id="contacts">
-  <h2>Contatti</h2>
+  <h2 data-i18n="contacts_title">Contatti</h2>
   <form id="contact-form">
     <input type="hidden" name="access_key" value="99866d2e-6ae4-49b9-961b-0f9613bfbe29">
     <input type="hidden" name="subject" value="Nuovo messaggio dal portfolio">
 
     <div class="form-group">
-      <label for="name">Nome</label>
+      <label for="name" data-i18n="label_name">Nome</label>
       <input type="text" id="name" name="name" required>
     </div>
 
     <div class="form-group">
-      <label for="email">La tua email</label>
+      <label for="email" data-i18n="label_email">La tua email</label>
       <input type="email" id="email" name="email" required>
     </div>
 
     <div class="form-group">
-      <label for="message">Messaggio</label>
+      <label for="message" data-i18n="label_message">Messaggio</label>
       <textarea id="message" name="message" rows="5" required></textarea>
     </div>
 
@@ -95,7 +98,7 @@
          data-callback="onCaptchaSuccess"
          data-expired-callback="onCaptchaExpired"></div>
 
-    <button type="submit" id="submit-btn" disabled>Invia messaggio</button>
+    <button type="submit" id="submit-btn" data-i18n="submit_btn" disabled>Invia messaggio</button>
   </form>
   <p id="form-status"></p>
 </section>
@@ -149,14 +152,13 @@
     function render() {
       slides.forEach((slide, i) => {
         let offset = i - index;
-        // normalizza l'offset per il loop (es. dall'ultima alla prima slide il salto è minimo)
         if (offset > slides.length / 2) offset -= slides.length;
         if (offset < -slides.length / 2) offset += slides.length;
 
         const abs = Math.abs(offset);
-        const x = offset * 65; // % di spostamento orizzontale, ben distanziate ai lati
-        const z = -abs * 200; // profondità leggera, non scompaiono dietro al centro
-        const rotY = offset * -1; // rotazione 3D moderata
+        const x = offset * 65;
+        const z = -abs * 200;
+        const rotY = offset * -1;
         const scale = 1 - abs * 0.16;
         const opacity = abs > 2 ? 0 : 1 - abs * 0.3;
 
@@ -179,7 +181,6 @@
 
     function startAuto() {
       stopAuto();
-      // Rispetta chi preferisce meno animazioni: niente scorrimento automatico
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       timer = setInterval(next, intervalMs);
     }
@@ -190,7 +191,6 @@
     nextBtn.addEventListener('click', () => { next(); startAuto(); });
     prevBtn.addEventListener('click', () => { prev(); startAuto(); });
 
-    // Pausa al passaggio del mouse o quando la scheda non è visibile
     carousel.addEventListener('mouseenter', stopAuto);
     carousel.addEventListener('mouseleave', startAuto);
     document.addEventListener('visibilitychange', () => {
@@ -249,28 +249,97 @@ contactForm.addEventListener('submit', async function(e) {
 </div>
 <div class="scroll-progress-label" id="scrollProgressLabel">0%</div>
 <script>
-  (function () {
-  const bar = document.getElementById('scrollProgressBar');
-  const label = document.getElementById('scrollProgressLabel');
+  document.addEventListener('DOMContentLoaded', function () {
+    const bar = document.getElementById('scrollProgressBar');
+    const label = document.getElementById('scrollProgressLabel');
 
-  function updateScrollProgress() {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    function updateScrollProgress() {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      const clamped = Math.min(100, Math.max(0, percent));
 
-    // Evita divisioni per zero se la pagina è più corta della viewport
-    const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-    const clamped = Math.min(100, Math.max(0, percent));
+      bar.style.width = clamped + '%';
+      label.textContent = Math.round(clamped) + '%';
+    }
 
-    bar.style.width = clamped + '%';
-    label.textContent = Math.round(clamped) + '%';
+    window.addEventListener('scroll', updateScrollProgress, { passive: true });
+    window.addEventListener('resize', updateScrollProgress, { passive: true });
+    updateScrollProgress();
+  });
+</script>
+
+<!-- LANGUAGE SWITCH -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const translations = {
+    it: {
+      header_subtitle: "Scenari Virtuali - Modellazione 3D - Virtual Reality",
+      about_title: "CHI SONO",
+      about_text: "Ciao, sono Federico! Sviluppo scenari virtuali e modelli 3D in diversi ambiti.<br>Utilizzo Blender, Unity e Unreal Engine e adoro sviluppare progetti in ambito storico-culturale!",
+      projects_title: "PROGETTI",
+      project1_title: "Ricostruzione VR – Abbazia di Chiaravalle (1200 CE)",
+      label_description: "Descrizione:",
+      project1_desc: "Ricostruzione virtuale dell'Abbazia di Chiaravalle Milanese così come appariva nel XIII secolo, sviluppata per Meta Quest 3 nell'ambito di un tirocinio curricolare presso Koinè Cooperativa Sociale ONLUS, ente gestore dell'Abbazia.",
+      label_software: "Software utilizzati:",
+      contacts_title: "Contatti",
+      label_name: "Nome",
+      label_email: "La tua email",
+      label_message: "Messaggio",
+      submit_btn: "Invia messaggio",
+      carousel_prev: "Immagine precedente",
+      carousel_next: "Immagine successiva"
+    },
+    en: {
+      header_subtitle: "Virtual Scenarios - 3D Modeling - Virtual Reality",
+      about_title: "ABOUT ME",
+      about_text: "Hi, I'm Federico! I develop virtual scenarios and 3D models across different fields.<br>I use Blender, Unity and Unreal Engine, and I love working on historical-cultural projects!",
+      projects_title: "PROJECTS",
+      project1_title: "VR Reconstruction – Chiaravalle Abbey (1200 CE)",
+      label_description: "Description:",
+      project1_desc: "Virtual reconstruction of the Chiaravalle Milanese Abbey as it appeared in the 13th century, developed for Meta Quest 3 as part of a curricular internship at Koinè Cooperativa Sociale ONLUS, the organization managing the Abbey.",
+      label_software: "Software used:",
+      contacts_title: "Contact",
+      label_name: "Name",
+      label_email: "Your email",
+      label_message: "Message",
+      submit_btn: "Send message",
+      carousel_prev: "Previous image",
+      carousel_next: "Next image"
+    }
+  };
+
+  const toggleBtn = document.getElementById('lang-toggle');
+  const STORAGE_KEY = 'preferredLang';
+  let currentLang = localStorage.getItem(STORAGE_KEY) || 'it';
+
+  function applyLanguage(lang) {
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      const key = el.getAttribute('data-i18n');
+      if (translations[lang] && translations[lang][key]) {
+        el.innerHTML = translations[lang][key];
+      }
+    });
+
+    document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
+      const key = el.getAttribute('data-i18n-aria');
+      if (translations[lang] && translations[lang][key]) {
+        el.setAttribute('aria-label', translations[lang][key]);
+      }
+    });
+
+    document.documentElement.setAttribute('lang', lang);
+    toggleBtn.textContent = lang === 'it' ? 'EN' : 'IT';
+    currentLang = lang;
+    localStorage.setItem(STORAGE_KEY, lang);
   }
 
-  // scroll passivo per non bloccare il thread principale (performance)
-  window.addEventListener('scroll', updateScrollProgress, { passive: true });
-  window.addEventListener('resize', updateScrollProgress, { passive: true });
+  toggleBtn.addEventListener('click', function () {
+    applyLanguage(currentLang === 'it' ? 'en' : 'it');
+  });
 
-  updateScrollProgress(); // stato iniziale al caricamento
-})();
+  applyLanguage(currentLang);
+});
 </script>
 
 </body>
