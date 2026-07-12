@@ -20,21 +20,15 @@
 }
 
 /* GENERALE */
-html {
-  /* consente comunque lo zoom/accessibilità utente, non blocchiamo nulla */
-  -webkit-text-size-adjust: 100%;
-}
-
 html, body {
   min-height: 100%;
-  overflow-x: hidden; /* evita scroll orizzontale accidentale su schermi stretti */
 }
 
 body {
-  font-family: 'Exo 2', Arial;
-  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.4rem);
-  background-color: #121018;
-  color: #E6E4ED;
+  font-family:'Exo 2', Arial;
+  font-size: 1.4rem;
+  background-color: #0f0f0f;
+  color: #e0e0e0;
   line-height: 1.6;
   min-height: 100vh;
 }
@@ -42,43 +36,42 @@ body {
 /* INTESTAZIONE */
 header {
   text-align: center;
-  padding: clamp(2rem, 4vw + 1rem, 3.75rem) clamp(1rem, 3vw, 1.25rem);
-  background-color: #1B1826;
-  border-bottom: 0.125rem solid #7C3AED;
+  padding: 60px 20px;
+  background-color: #1a1a2e;
+  border-bottom: 2px solid #7b2fff;
 }
 
 header h1 {
   font-family: 'Exo 2', Arial;
-  font-size: clamp(1.8rem, 4vw + 1rem, 3rem);
-  color: #A78BFA;
+  font-size: 3.0rem;
+  color: #b388ff;
 }
 
 header p {
-  font-size: clamp(1.1rem, 2vw + 0.8rem, 2.4rem);
-  color: #9C99A8;
-  margin-top: 0.5rem;
+  font-size: 2.4rem;
+  color: #a0a0c0;
+  margin-top: 8px;
 }
 
 /* SEZIONI */
 section {
-  width: 100%;
-  max-width: 56.25rem; /* 900px, tetto massimo */
-  margin: clamp(2rem, 5vw, 3.125rem) auto;
-  padding: 0 clamp(1rem, 4vw, 1.25rem);
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 0 20px ;
 }
 
 section h2 {
   font-family: 'Exo 2', Arial;
-  font-size: clamp(1.5rem, 2vw + 1rem, 2.4rem);
-  color: #A78BFA;
-  margin-bottom: 1rem;
-  border-bottom: 0.0625rem solid #7C3AED;
-  padding-bottom: 0.5rem;
+  font-size: 2.4rem;
+  color: #a86bff;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #7b2fff;
+  padding-bottom: 8px;
 }
 
 /* LINK */
 a {
-  color: #2DD4BF;
+  color: #7b2fff;
   text-decoration: none;
 }
 
@@ -88,45 +81,27 @@ a:hover {
 
 /* PROGETTI */
 .project {
-  background-color: #1E1B2A;
-  border-left: 0.25rem solid #7C3AED;
-  padding: clamp(1rem, 3vw, 1.25rem);
-  margin-bottom: 1.5rem;
-  border-radius: 0.25rem;
+  background-color: #16162a;
+  border-left: 4px solid #7b2fff;
+  padding: 20px;
+  margin-bottom: 24px;
+  border-radius: 4px;
 }
 
 .project h3 {
   font-family: 'Exo 2', Arial;
-  font-size: clamp(1.3rem, 1.5vw + 1rem, 2rem);
+  font-size: 2.0rem;
   color: #ffffff;
-}
-
-.project h2 {
-  font-family: 'Exo 2', Arial;
-  font-size: clamp(1.1rem, 1vw + 0.9rem, 1.4rem);
-  color: #ffffff;
-  margin-bottom: 0.625rem;
-  margin-top: 1.875rem;
-  border-bottom: none;
-}
-
-.project p {
-  margin-top: 0.625rem;
-  margin-bottom: 0.625rem;
-}
-
-.project li {
-  margin-top: 0.625rem;
+  margin-bottom: 8px;
 }
 
 /* CAROSELLO */
 .carousel {
   position: relative;
-  width: 100%;
-  margin-top: clamp(2rem, 5vw, 3.125rem);
+  margin-top: 32px;
   height: 0;
-  padding-bottom: 56.25%; /* 16:9, resta proporzionale a qualsiasi larghezza */
-  perspective: 43.75rem;
+  padding-bottom: 56.25%; /* 16:9 */
+  perspective: 700px;
 }
 
 .carousel-track {
@@ -142,10 +117,10 @@ a:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 0.375rem;
+  border-radius: 6px;
   cursor: pointer;
   transition: transform 0.6s ease, opacity 0.6s ease, filter 0.6s ease;
-  box-shadow: 0 1.25rem 3.125rem rgba(0, 0, 0, 0.7);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
   backface-visibility: hidden;
 }
 
@@ -153,40 +128,40 @@ a:hover {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(18, 16, 24, 0.6);
+  background-color: rgba(15, 15, 15, 0.6);
   color: #ffffff;
-  border: 0.125rem solid rgba(18, 16, 24, 0);
+  border: 1px solid #7b2fff;
   border-radius: 50%;
-  width: clamp(2rem, 5vw, 2.5rem);
-  height: clamp(2rem, 5vw, 2.5rem);
-  font-size: clamp(1rem, 2vw, 1.2rem);
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.2s, border-color 0.2s;
+  transition: background-color 0.2s;
 }
 
 .carousel-arrow:hover {
-  border-color: #7C3AED;
+  background-color: rgba(123, 47, 255, 0.7);
 }
 
-.carousel-prev { left: clamp(0.5rem, 2vw, 0.75rem); }
-.carousel-next { right: clamp(0.5rem, 2vw, 0.75rem); }
+.carousel-prev { left: 12px; }
+.carousel-next { right: 12px; }
 
 .carousel-dots {
   position: absolute;
-  bottom: 0.75rem;
+  bottom: 12px;
   left: 0;
   right: 0;
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 8px;
 }
 
 .carousel-dots button {
-  width: 0.625rem;
-  height: 0.625rem;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   border: none;
   background-color: rgba(255, 255, 255, 0.4);
@@ -195,28 +170,35 @@ a:hover {
 }
 
 .carousel-dots button.active {
-  background-color: #7C3AED;
+  background-color: #7b2fff;
+}
+
+@media (max-width: 600px) {
+  .carousel-arrow {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
 }
 
 /* VIDEO SHOWCASE */
 .video-showcase {
-  margin-top: clamp(2rem, 5vw, 3.125rem);
+  margin-top: 32px;
 }
 
 .video-showcase h3 {
   font-family: 'Exo 2', Arial;
-  font-size: clamp(1.3rem, 1.5vw + 1rem, 2rem);
+  font-size: 2.0rem;
   color: #ffffff;
-  margin-bottom: 0.75rem;
+  margin-bottom: 12px;
 }
 
 .video-showcase video {
   width: 100%;
   aspect-ratio: 16 / 9;
-  border-radius: 0.375rem;
+  border-radius: 6px;
   background-color: #000;
-  border: 0px solid #4C3575;
-  box-shadow: 0 1.25rem 3.125rem rgba(0, 0, 0, 0.7);
+  border: 1px solid #7b2fff;
 }
 
 /* LIGHTBOX */
@@ -238,16 +220,16 @@ a:hover {
 .lightbox img {
   max-width: 90vw;
   max-height: 90vh;
-  border-radius: 0.25rem;
+  border-radius: 4px;
   object-fit: contain;
 }
 
 .lightbox-close {
   position: absolute;
-  top: clamp(1rem, 3vw, 1.25rem);
-  right: clamp(1.25rem, 4vw, 1.875rem);
+  top: 20px;
+  right: 30px;
   color: #ffffff;
-  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-size: 2.5rem;
   cursor: pointer;
   line-height: 1;
 }
@@ -255,55 +237,52 @@ a:hover {
 .project ul {
   padding-left: 0;
   list-style-position: inside;
-  margin-top: 0.25rem;
+  margin-top: 4px;
 }
 
-/* FORM */
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 16px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 0.375rem;
-  color: #A78BFA;
-  font-size: clamp(1.1rem, 1vw + 0.9rem, 1.4rem);
+  margin-bottom: 6px;
+  color: #a86bff;
+  font-size: 1.4rem;
 }
 
 .form-group input,
 .form-group textarea {
   width: 100%;
-  padding: 0.5rem 0.75rem; /* aumentato leggermente rispetto a 1px per usabilità touch */
-  background-color: #1E1B2A;
-  border: 0.0625rem solid #4C3575;
-  border-radius: 0.25rem;
-  color: #E6E4ED;
+  padding: 1px 12px;
+  background-color: #16162a;
+  border: 1px solid #7b2fff;
+  border-radius: 4px;
+  color: #e0e0e0;
   font-family: 'Exo 2', Arial;
-  font-size: clamp(1.1rem, 1vw + 0.9rem, 1.4rem);
+  font-size: 1.4rem;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border: 0.125rem solid;
-  border-color: #7C3AED;
+  border-color: #b388ff;
+  box-shadow: 0 0 0 2px rgba(123, 47, 255, 0.3);
 }
 
 #contact-form button[type="submit"] {
-  background-color: #4C3575;
+  background-color: #7b2fff;
   color: #ffffff;
   border: none;
-  padding: 0.625rem 1.75rem;
-  border-radius: 0.25rem;
-  font-size: clamp(1.1rem, 1vw + 0.9rem, 1.4rem);
+  padding: 10px 28px;
+  border-radius: 4px;
+  font-size: 1.4rem;
   cursor: pointer;
   transition: background-color 0.2s;
-  font-family: 'Exo 2', Arial;
 }
 
 #contact-form button[type="submit"]:hover {
-  background-color: #7C3AED;
-  color: #121018;
+  background-color: #a86bff;
 }
 
 #contact-form button[type="submit"]:disabled {
@@ -312,58 +291,14 @@ a:hover {
 }
 
 #form-status {
-  margin-top: 0.75rem;
-  font-size: clamp(1rem, 0.9vw + 0.9rem, 1.3rem);
+  margin-top: 12px;
+  font-size: 1.3rem;
 }
 
-.form-success { color: #2DD4BF; }
+.form-success { color: #6bff8f; }
 .form-error { color: #ff6b6b; }
 
 .h-captcha {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  /* hCaptcha ha una larghezza fissa nel suo iframe: su schermi molto stretti
-     può forzare uno scroll orizzontale, per questo abbiamo messo
-     overflow-x: hidden su html/body come rete di sicurezza */
-}
-
-/* Solo un breakpoint per i casi limite: schermi davvero piccoli */
-@media (max-width: 22.5rem) { /* 360px */
-  .carousel-arrow {
-    width: 1.75rem;
-    height: 1.75rem;
-  }
-}
-
-/* SCROLL PROGRESS INDICATOR */
-.scroll-progress-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 0.25rem; /* 4px */
-  background-color: rgba(76, 53, 117, 0.3); /* viola muto trasparente */
-  z-index: 2000; /* sopra a tutto, incluso il lightbox se serve */
-}
-
-.scroll-progress-bar {
-  height: 100%;
-  width: 0%; /* aggiornato via JS */
-  background-color: #7C3AED; /* viola identità */
-  transition: width 0.1s ease-out;
-}
-
-/* Opzionale: numero percentuale visibile */
-.scroll-progress-label {
-  position: fixed;
-  top: 0.75rem;
-  right: 1rem;
-  font-family: 'Exo 2', Arial;
-  font-size: 0.85rem;
-  color: #E6E4ED;
-  background-color: rgba(18, 16, 24, 0.7);
-  padding: 0.2rem 0.6rem;
-  border-radius: 0.25rem;
-  z-index: 2000;
-  pointer-events: none; /* non intercetta click */
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
