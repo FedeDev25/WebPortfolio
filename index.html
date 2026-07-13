@@ -9,19 +9,24 @@
   </head>
 <body>
 
-  <!-- LANGUAGE BUTTON -->
+  <!-- BUTTONS -->
+  <!-- Language button -->
  <button id="lang-toggle" aria-label="Switch language">🇬🇧</button>
 
-  <!-- HOME BUTTON -->
-  <button id="back-home" aria-label="Torna alla home">Home</button>
+  <!-- Homepage button -->
+  <button id="back-home" aria-label="Reload Homepage">Home</button>
+  
+  <!-- Contact me button -->
+  <button id="contact-me" aria-label="Contact me">Contact me</button>
 
-  <!-- INTESTAZIONE -->
+  <!-- CONTENT -->
+  <!-- Opening -->
   <header>
     <h1>Fed_Dev</h1>
     <p data-i18n="header_subtitle">Scenari Virtuali - Modellazione 3D - Virtual Reality</p>
   </header>
 
-  <!-- CHI SONO -->
+  <!-- About me -->
   <section id="about">
     <h2 data-i18n="about_title">CHI SONO</h2>
     <p data-i18n="about_text">
@@ -29,7 +34,7 @@
     </p>
   </section>
 
-  <!-- PROGETTI -->
+  <!-- Projects -->
  <section id="projects">
   <h2 data-i18n="projects_title">PROGETTI</h2>
 
@@ -68,7 +73,7 @@
 
 </section>
 
- <!-- CONTATTI -->
+ <!-- Contacts -->
 <section id="contacts">
   <h2 data-i18n="contacts_title">Contatti</h2>
   <form id="contact-form">
@@ -106,14 +111,15 @@
   <p id="form-status"></p>
 </section>
 
-  <!-- LIGHTBOX -->
+  <!-- Lightbox -->
 <div id="lightbox" class="lightbox">
   <span class="lightbox-close">&times;</span>
   <img id="lightbox-img" src="" alt="">
 </div>
 
+<!-- OTHER SCRIPTS -->
 <script>
-  // LIGHTBOX
+  // Lightbox script
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
 
@@ -132,7 +138,7 @@
     if (e.key === 'Escape') lightbox.classList.remove('active');
   });
 
-  // CAROSELLO
+  // Carousel script
   document.querySelectorAll('.carousel').forEach(carousel => {
     const track = carousel.querySelector('.carousel-track');
     const slides = Array.from(track.children);
@@ -204,7 +210,7 @@
     startAuto();
   });
 
- // FORM CONTATTI — invio via Web3Forms senza reload pagina
+ // Contact form setup script
 const contactForm = document.getElementById('contact-form');
 const formStatus = document.getElementById('form-status');
 
@@ -228,14 +234,14 @@ contactForm.addEventListener('submit', async function(e) {
     const result = await response.json();
 
     if (result.success) {
-      formStatus.textContent = 'Messaggio inviato! Ti risponderò al più presto.';
+      formStatus.textContent = 'Message sent!';
       formStatus.className = 'form-success';
       contactForm.reset();
     } else {
-      throw new Error(result.message || 'Errore sconosciuto');
+      throw new Error(result.message || 'Unknown error');
     }
   } catch (error) {
-    formStatus.textContent = 'Errore nell\'invio. Riprova o scrivimi direttamente.';
+    formStatus.textContent = 'An error occurred. Retry or contact me directly.';
     formStatus.className = 'form-error';
   } finally {
     submitBtn.disabled = false;
@@ -257,10 +263,10 @@ window.addEventListener('pageshow', function(event) {
 });
 </script>
 
-<!-- h-captcha script -->
+<!-- H-CAPTCHA SCRIPT -->
 <script src="https://web3forms.com/client/script.js" async defer></script>
 
-<!-- Scroll % indicator -->
+<!-- PAGE SCROLL % INDICATOR SCRIPT -->
 <div class="scroll-progress-container" aria-hidden="true">
   <div class="scroll-progress-bar" id="scrollProgressBar"></div>
 </div>
@@ -286,24 +292,24 @@ window.addEventListener('pageshow', function(event) {
   });
 </script>
 
-<!-- LANGUAGE SWITCH -->
+<!-- LANGUAGE SWITCH SCRIPT -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   const translations = {
     it: {
       header_subtitle: "Scenari Virtuali - Modellazione 3D - Virtual Reality",
       about_title: "CHI SONO",
-      about_text: "Ciao, sono Federico! Sviluppo scenari virtuali e modelli 3D in diversi ambiti.<br>Utilizzo Blender, Unity e Unreal Engine e adoro sviluppare progetti in ambito storico-culturale!",
+      about_text: "Ciao, sono Federico! Sviluppo scenari virtuali e modelli 3D in diversi ambiti.<br>Utilizzo Blender, Unity e Unreal Engine e adoro sviluppare progetti in ambito storico e culturale!",
       projects_title: "PROGETTI",
       project1_title: "Ricostruzione VR – Abbazia di Chiaravalle (1200 CE)",
       label_description: "Descrizione:",
       project1_desc: "Ricostruzione virtuale dell'Abbazia di Chiaravalle Milanese così come appariva nel XIII secolo, sviluppata per Meta Quest 3 nell'ambito di un tirocinio curricolare presso Koinè Cooperativa Sociale ONLUS, ente gestore dell'Abbazia.",
       label_software: "Software utilizzati:",
-      contacts_title: "Contatti",
+      contacts_title: "Contattami",
       label_name: "Nome",
       label_email: "La tua email",
       label_message: "Messaggio",
-      submit_btn: "Invia messaggio",
+      submit_btn: "Invia",
       carousel_prev: "Immagine precedente",
       carousel_next: "Immagine successiva"
     },
@@ -316,11 +322,11 @@ document.addEventListener('DOMContentLoaded', function () {
       label_description: "Description:",
       project1_desc: "Virtual reconstruction of the Chiaravalle Milanese Abbey as it appeared in the 13th century, developed for Meta Quest 3 as part of a curricular internship at Koinè Cooperativa Sociale ONLUS, the organization managing the Abbey.",
       label_software: "Software used:",
-      contacts_title: "Contact",
+      contacts_title: "Contact me",
       label_name: "Name",
       label_email: "Your email",
       label_message: "Message",
-      submit_btn: "Send message",
+      submit_btn: "Submit",
       carousel_prev: "Previous image",
       carousel_next: "Next image"
     }
@@ -359,7 +365,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<!-- Home page button recall -->
+<!-- HOMEPAGE BUTTON RECALL SCRIPTS -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   const backHomeBtn = document.getElementById('back-home');

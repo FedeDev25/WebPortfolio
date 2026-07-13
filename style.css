@@ -398,7 +398,7 @@ a:hover {
  #back-home {
   position: fixed;
   top: 0.75rem;
-  right: 8.45rem;
+  right: 15.4rem;
   background-color: rgba(18, 16, 24, 0.7);
   color: #E6E4ED;
   border: 0.0625rem solid #4C3575;
@@ -412,6 +412,28 @@ a:hover {
 }
 
 #back-home:hover {
+  border-color: #7C3AED;
+  color: #A78BFA;
+}
+
+/* Get in touch button */
+ #contact-me {
+  position: fixed;
+  top: 0.75rem;
+  right: 8.2rem;
+  background-color: rgba(18, 16, 24, 0.7);
+  color: #E6E4ED;
+  border: 0.0625rem solid #4C3575;
+  border-radius: 0.25rem;
+  padding: 0.4rem 0.8rem;
+  font-family: 'Exo 2', Arial;
+  font-size: 0.9rem;
+  cursor: pointer;
+  z-index: 2001;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+#contact-me:hover {
   border-color: #7C3AED;
   color: #A78BFA;
 }
