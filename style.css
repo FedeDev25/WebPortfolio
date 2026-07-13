@@ -361,7 +361,7 @@ a:hover {
   top: 0.75rem;
   right: 1rem;
   font-family: 'Exo 2', Arial;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   color: #E6E4ED;
   background-color: rgba(18, 16, 24, 0.7);
   border: 0.0625rem solid #4C3575;
@@ -376,14 +376,14 @@ a:hover {
 #lang-toggle {
   position: fixed;
   top: 0.75rem;
-  right: 5.1rem; /* spazio sufficiente per non sovrapporsi alla label scroll a destra */
+  right: 5.5rem; /* spazio sufficiente per non sovrapporsi alla label scroll a destra */
   background-color: rgba(18, 16, 24, 0.7);
   color: #E6E4ED;
   border: 0.0625rem solid #4C3575;
   border-radius: 0.25rem;
   padding: 0.4rem 0.8rem;
   font-family: 'Exo 2', Arial;
-  font-size: 0.9rem;
+  font-size: 1.046rem;
   cursor: pointer;
   z-index: 2001; /* sopra allo scroll indicator (2000) */
   transition: border-color 0.2s, color 0.2s;
@@ -394,46 +394,46 @@ a:hover {
   color: #A78BFA;
 }
 
-/* Home button */
- #back-home {
-  position: fixed;
-  top: 0.75rem;
-  right: 15.4rem;
-  background-color: rgba(18, 16, 24, 0.7);
-  color: #E6E4ED;
-  border: 0.0625rem solid #4C3575;
-  border-radius: 0.25rem;
-  padding: 0.4rem 0.8rem;
-  font-family: 'Exo 2', Arial;
-  font-size: 0.9rem;
-  cursor: pointer;
-  z-index: 2001;
-  transition: border-color 0.2s, color 0.2s;
-}
-
-#back-home:hover {
-  border-color: #7C3AED;
-  color: #A78BFA;
-}
-
-/* Get in touch button */
+/* Contact me button */
  #contact-me {
   position: fixed;
   top: 0.75rem;
-  right: 8.2rem;
+  right: 8.35rem;
   background-color: rgba(18, 16, 24, 0.7);
   color: #E6E4ED;
   border: 0.0625rem solid #4C3575;
   border-radius: 0.25rem;
   padding: 0.4rem 0.8rem;
   font-family: 'Exo 2', Arial;
-  font-size: 0.9rem;
+  font-size: 1.165rem;
   cursor: pointer;
   z-index: 2001;
   transition: border-color 0.2s, color 0.2s;
 }
 
 #contact-me:hover {
+  border-color: #7C3AED;
+  color: #A78BFA;
+}
+
+/* Home button */
+ #back-home {
+  position: fixed;
+  top: 0.75rem;
+  right: 16.47rem;
+  background-color: rgba(18, 16, 24, 0.7);
+  color: #E6E4ED;
+  border: 0.0625rem solid #4C3575;
+  border-radius: 0.25rem;
+  padding: 0.4rem 0.8rem;
+  font-family: 'Exo 2', Arial;
+  font-size: 1.165rem;
+  cursor: pointer;
+  z-index: 2001;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+#back-home:hover {
   border-color: #7C3AED;
   color: #A78BFA;
 }
