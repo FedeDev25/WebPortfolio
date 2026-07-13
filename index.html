@@ -388,8 +388,15 @@
 
   <!-- 8. Contact me button: scrolla fino al contact form -->
   <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const contactMeBtn = document.getElementById('contact-me');
+      const contactSection = document.getElementById('contacts');
 
+      contactMeBtn.addEventListener('click', function () {
+        contactSection.scrollIntoView({behavior: 'smooth'});
+      });
+    })
   </script>
-  
+
 </body>
 </html>
