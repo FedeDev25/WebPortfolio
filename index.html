@@ -9,8 +9,8 @@
   </head>
 <body>
 
-  <!-- LANGUAGE TOGGLE -->
-  <button id="lang-toggle" aria-label="Switch language">EN</button>
+  <!-- LANGUAGE BUTTON -->
+ <button id="lang-toggle" aria-label="Switch language">🇬🇧</button>
 
   <!-- HOME BUTTON -->
   <button id="back-home" aria-label="Torna alla home">Home</button>
@@ -241,6 +241,20 @@ contactForm.addEventListener('submit', async function(e) {
     submitBtn.disabled = false;
   }
 });
+
+// Callback hCaptcha — abilita il bottone solo dopo verifica completata
+function onCaptchaSuccess() {
+  document.getElementById('submit-btn').disabled = false;
+}
+
+function onCaptchaExpired() {
+  document.getElementById('submit-btn').disabled = true;
+}
+
+// Forza reset stato bottone ad ogni caricamento, ignorando il form state restoration del browser
+window.addEventListener('pageshow', function(event) {
+  document.getElementById('submit-btn').disabled = true;
+});
 </script>
 
 <!-- h-captcha script -->
@@ -332,7 +346,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.documentElement.setAttribute('lang', lang);
-    toggleBtn.textContent = lang === 'it' ? 'EN' : 'IT';
+    toggleBtn.textContent = lang === 'it' ? '🇮🇹' : '🇬🇧';
     currentLang = lang;
     localStorage.setItem(STORAGE_KEY, lang);
   }
