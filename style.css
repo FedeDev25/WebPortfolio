@@ -19,21 +19,34 @@
   box-sizing: border-box;
 }
 
+/* SELEZIONE TESTO */
+::selection {
+  background-color: #4C3575;
+  color: #E6E4ED;
+}
+
+::-moz-selection {
+  background-color: #4C3575;
+  color: #E6E4ED;
+}
+
 /* GENERALE */
 html {
-  /* consente comunque lo zoom/accessibilità utente, non blocchiamo nulla */
   -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
 
 html, body {
   min-height: 100%;
-  overflow-x: hidden; /* evita scroll orizzontale accidentale su schermi stretti */
+  overflow-x: hidden;
 }
 
 body {
   font-family: 'Exo 2', Arial;
   font-size: clamp(1rem, 0.9rem + 0.4vw, 1.4rem);
   background-color: #121018;
+  background-image: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(124, 58, 237, 0.12), transparent 70%);
+  background-attachment: fixed;
   color: #E6E4ED;
   line-height: 1.6;
   min-height: 100vh;
@@ -41,28 +54,56 @@ body {
 
 /* INTESTAZIONE */
 header {
+  position: relative;
   text-align: center;
   padding: clamp(6rem, 4vw + 1rem, 3.75rem) clamp(1rem, 3vw, 1.25rem);
   background-color: #1B1826;
   border-bottom: 0.0625rem solid #7C3AED;
+  overflow: hidden;
+}
+
+header::before {
+  content: "";
+  position: absolute;
+  top: -40%;
+  left: 50%;
+  width: 40rem;
+  height: 40rem;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.25) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+header h1,
+header p {
+  position: relative;
+  z-index: 1;
 }
 
 header h1 {
   font-family: 'Exo 2', Arial;
   font-size: clamp(1.8rem, 4vw + 1rem, 3rem);
   color: #A78BFA;
+  text-shadow: 0 0 1.5rem rgba(167, 139, 250, 0.5);
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { text-shadow: 0 0 1.5rem rgba(167, 139, 250, 0.35); }
+  50% { text-shadow: 0 0 2.25rem rgba(167, 139, 250, 0.65); }
 }
 
 header p {
   font-size: clamp(1.1rem, 2vw + 0.8rem, 2.4rem);
-  color: #9C99A8;
+  color: #C9C5D6; /* era #9C99A8, troppo piatto su sfondo scuro */
   margin-top: 0.5rem;
 }
 
 /* SEZIONI */
 section {
   width: 100%;
-  max-width: 56.25rem; /* 900px, tetto massimo */
+  max-width: 56.25rem;
   margin: clamp(2rem, 5vw, 3.125rem) auto;
   padding: 0 clamp(1rem, 4vw, 1.25rem);
 }
@@ -86,6 +127,26 @@ a:hover {
   text-decoration: underline;
 }
 
+/* REVEAL ON SCROLL */
+.reveal {
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 /* PROGETTI */
 .project {
   background-color: #1E1B2A;
@@ -93,6 +154,13 @@ a:hover {
   padding: clamp(1rem, 3vw, 1.25rem);
   margin-bottom: 1.5rem;
   border-radius: 0.25rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.project:hover {
+  transform: translateY(-0.25rem);
+  box-shadow: 0 0.75rem 2rem rgba(124, 58, 237, 0.25);
+  border-left-color: #A78BFA;
 }
 
 .project h3 {
@@ -125,7 +193,7 @@ a:hover {
   width: 100%;
   margin-top: clamp(2rem, 5vw, 3.125rem);
   height: 0;
-  padding-bottom: 56.25%; /* 16:9, resta proporzionale a qualsiasi larghezza */
+  padding-bottom: 56.25%;
   perspective: 43.75rem;
 }
 
@@ -149,6 +217,10 @@ a:hover {
   backface-visibility: hidden;
 }
 
+.carousel-track img:hover {
+  filter: brightness(1.08);
+}
+
 .carousel-arrow {
   position: absolute;
   top: 50%;
@@ -164,11 +236,12 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.2s, border-color 0.2s;
+  transition: color 0.2s, border-color 0.2s, transform 0.2s;
 }
 
 .carousel-arrow:hover {
   border-color: #7C3AED;
+  transform: translateY(-50%) scale(1.08);
 }
 
 .carousel-prev { left: clamp(0.5rem, 2vw, 0.75rem); }
@@ -192,10 +265,12 @@ a:hover {
   background-color: rgba(255, 255, 255, 0.4);
   cursor: pointer;
   padding: 0;
+  transition: transform 0.2s;
 }
 
 .carousel-dots button.active {
   background-color: #7C3AED;
+  transform: scale(1.2);
 }
 
 /* VIDEO SHOWCASE */
@@ -217,6 +292,11 @@ a:hover {
   background-color: #000;
   border: 0px solid #4C3575;
   box-shadow: 0 1.25rem 3.125rem rgba(0, 0, 0, 0.7);
+  transition: box-shadow 0.3s ease;
+}
+
+.video-showcase video:hover {
+  box-shadow: 0 1.25rem 3.125rem rgba(124, 58, 237, 0.35);
 }
 
 /* LIGHTBOX */
@@ -280,6 +360,7 @@ a:hover {
   color: #E6E4ED;
   font-family: 'Exo 2', Arial;
   font-size: clamp(1.1rem, 1vw + 0.9rem, 1.4rem);
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .form-group input:focus,
@@ -287,6 +368,7 @@ a:hover {
   outline: none;
   border: 0.125rem solid;
   border-color: #7C3AED;
+  box-shadow: 0 0 0 0.2rem rgba(124, 58, 237, 0.2);
 }
 
 #contact-form button[type="submit"] {
@@ -297,15 +379,14 @@ a:hover {
   border-radius: 0.25rem;
   font-size: clamp(1.1rem, 1vw + 0.9rem, 1.4rem);
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
   font-family: 'Exo 2', Arial;
 }
 
-#contact-form button[type="submit"]:hover {
+#contact-form button[type="submit"]:hover:not(:disabled) {
   border-color: #7C3AED;
   color: #A78BFA;
-
-  
+  box-shadow: 0 0 1rem rgba(124, 58, 237, 0.3);
 }
 
 #contact-form button[type="submit"]:disabled {
@@ -324,13 +405,9 @@ a:hover {
 .h-captcha {
   margin-top: 1rem;
   margin-bottom: 1rem;
-  /* hCaptcha ha una larghezza fissa nel suo iframe: su schermi molto stretti
-     può forzare uno scroll orizzontale, per questo abbiamo messo
-     overflow-x: hidden su html/body come rete di sicurezza */
 }
 
-/* Solo un breakpoint per i casi limite: schermi davvero piccoli */
-@media (max-width: 22.5rem) { /* 360px */
+@media (max-width: 22.5rem) {
   .carousel-arrow {
     width: 1.75rem;
     height: 1.75rem;
@@ -343,41 +420,37 @@ a:hover {
   top: 0;
   left: 0;
   width: 100%;
-  height: 0.25rem; /* 4px */
-  background-color: rgba(76, 53, 117, 0.3); /* viola muto trasparente */
-  z-index: 2000; /* sopra a tutto, incluso il lightbox se serve */
+  height: 0.25rem;
+  background-color: rgba(76, 53, 117, 0.3);
+  z-index: 2000;
 }
 
 .scroll-progress-bar {
   height: 100%;
-  width: 0%; /* aggiornato via JS */
-  background-color: #7C3AED; /* viola identità */
+  width: 0%;
+  background-color: #7C3AED;
   transition: width 0.4s ease-out;
 }
 
-/* Opzionale: numero percentuale visibile */
 .scroll-progress-label {
   position: fixed;
   top: 0.75rem;
   right: 1rem;
   font-family: 'Exo 2', Arial;
   font-size: 1.165rem;
-
   color: #E6E4ED;
   background-color: rgba(18, 16, 24, 0.7);
   border: 0.0625rem solid #4C3575;
   border-radius: 0.25rem;
   padding: 0.44rem 0.8rem;
-  border-radius: 0.25rem;
   z-index: 2000;
-  pointer-events: none; /* non intercetta click */
+  pointer-events: none;
 }
 
-/* Language button*/
 #lang-toggle {
   position: fixed;
   top: 0.75rem;
-  right: 6.0rem; /* spazio sufficiente per non sovrapporsi alla label scroll a destra */
+  right: 6.0rem;
   background-color: rgba(18, 16, 24, 0.7);
   color: #E6E4ED;
   border: 0.0625rem solid #4C3575;
@@ -386,16 +459,16 @@ a:hover {
   font-family: 'Exo 2', Arial;
   font-size: 1.165rem;
   cursor: pointer;
-  z-index: 2001; /* sopra allo scroll indicator (2000) */
-  transition: border-color 0.2s, color 0.2s;
+  z-index: 2001;
+  transition: border-color 0.2s, color 0.2s, transform 0.2s;
 }
 
 #lang-toggle:hover {
   border-color: #7C3AED;
   color: #A78BFA;
+  transform: translateY(-0.1rem);
 }
 
-/* Contact me button */
 #contact-me {
   position: fixed;
   top: 0.75rem;
@@ -409,15 +482,15 @@ a:hover {
   font-size: 1.165rem;
   cursor: pointer;
   z-index: 2001;
-  transition: border-color 0.2s, color 0.2s;
+  transition: border-color 0.2s, color 0.2s, transform 0.2s;
 }
 
 #contact-me:hover {
   border-color: #7C3AED;
   color: #A78BFA;
+  transform: translateY(-0.1rem);
 }
 
-/* Home button */
 #back-home {
   position: fixed;
   top: 0.75rem;
@@ -431,18 +504,18 @@ a:hover {
   font-size: 1.165rem;
   cursor: pointer;
   z-index: 2001;
-  transition: border-color 0.2s, color 0.2s;
+  transition: border-color 0.2s, color 0.2s, transform 0.2s;
 }
 
 #back-home:hover {
   border-color: #7C3AED;
   color: #A78BFA;
+  transform: translateY(-0.1rem);
 }
 
-/* Social bar: fissa, centrata, sempre visibile */
 #social-bar {
   position: fixed;
-  top: 0.75rem; /* stessa altezza di #back-home */
+  top: 0.75rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -461,10 +534,10 @@ a:hover {
   color: #E6E4ED;
   background-color: transparent;
   border: 0.0625rem solid transparent;
-  border-radius: 0.25rem;      /* era 1.5rem, ora coerente con gli altri pulsanti */
-  padding: 0.4rem 0.8rem;      /* stesso padding di #back-home */
+  border-radius: 0.25rem;
+  padding: 0.4rem 0.8rem;
   font-family: 'Exo 2', Arial;
-  font-size: 1.165rem;         /* stesso font-size di #back-home */
+  font-size: 1.165rem;
   text-decoration: none;
   transition: border-color 0.2s, color 0.2s;
 }
@@ -476,12 +549,11 @@ a:hover {
 }
 
 .social-btn svg {
-  width: 1rem;   /* ridimensionate rispetto ai 20px fissi originali */
+  width: 1rem;
   height: 1rem;
   flex-shrink: 0;
 }
 
-/* Su schermi molto stretti, nascondi il testo e mostra solo l'icona */
 @media (max-width: 22.5rem) {
   .social-btn span {
     display: none;
