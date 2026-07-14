@@ -562,3 +562,20 @@ a:hover {
     padding: 0.5rem;
   }
 }
+
+/* PARTICLE BACKGROUND */
+#particle-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* dietro a tutto il contenuto */
+  pointer-events: none; /* non intercetta click/hover */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #particle-bg {
+    display: none;
+  }
+}
