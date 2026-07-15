@@ -120,18 +120,21 @@
     <!-- Honeypot anti-spam: i bot lo compilano, gli utenti reali no perché è invisibile -->
     <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
 
-    <!-- h-captcha -->
-    <div class="h-captcha reveal" 
-      data-captcha="true" 
-      data-theme="dark" 
-      data-size="normal"
-      data-callback="onCaptchaSuccess"
-      data-expired-callback="onCaptchaExpired">
+    <!-- hCaptcha caricato solo su consenso esplicito dell'utente -->
+    <div id="captcha-consent" class="captcha-consent">
+      <p data-i18n="captcha_consent_text">
+        Per inviare il modulo è necessaria una verifica anti-spam (hCaptcha), fornita da
+        un servizio di terze parti che elabora dati tecnici (IP, movimenti del mouse).
+        Verrà caricata solo se acconsenti cliccando qui sotto.
+      </p>
+      <button type="button" id="captcha-consent-btn" data-i18n="captcha_consent_btn">Accetta e carica hCaptcha</button>
     </div>
+    <div id="captcha-container"></div>
 
     <button type="submit" id="submit-btn" data-i18n="submit_btn" disabled>Invia messaggio</button>
   </form>
   <p id="form-status"></p>
+  <p class="privacy-note"><a href="privacy.html" data-i18n="privacy_link">Leggi la Privacy Policy</a></p>
 </section>
 
   <!-- Lightbox -->
@@ -149,12 +152,12 @@
 <!-- Footer: copyright / diritti riservati -->
 <footer id="site-footer" class="reveal">
   <p data-i18n="footer_copyright">© 2026 Federico Bertelli. Tutti i diritti riservati.</p>
+  <p><a href="privacy.html" data-i18n="privacy_link">Leggi la Privacy Policy</a></p>
 </footer>
 
   <!------------------------------------ SCRIPTS --------------------------------------------------->
 
-  <!-- 1. Librerie esterne -->
-  <script src="https://web3forms.com/client/script.js" async defer></script>
+  <!-- 1. Librerie esterne: Web3Forms viene caricato on-demand, vedi script "Caricamento hCaptcha on-demand" -->
 
   <!-- 2. Carousel: gestisce rotazione automatica, frecce e dots del carosello progetti -->
   <script>
@@ -348,7 +351,10 @@
           carousel_prev: "Immagine precedente",
           carousel_next: "Immagine successiva",
           contact_me: "Contattami",
-          footer_copyright: "© 2026 Federico Bertelli. Tutti i diritti riservati."
+          footer_copyright: "© 2026 Federico Bertelli. Tutti i diritti riservati.",
+          privacy_link: "Leggi la Privacy Policy",
+          captcha_consent_text: "Per inviare il modulo è necessaria una verifica anti-spam (hCaptcha), fornita da un servizio di terze parti che elabora dati tecnici (IP, movimenti del mouse). Verrà caricata solo se acconsenti cliccando qui sotto.",
+          captcha_consent_btn: "Accetta e carica hCaptcha"
         },
         en: {
           header_subtitle: "Virtual Scenarios - 3D Modeling - Virtual Reality",
@@ -367,7 +373,10 @@
           carousel_prev: "Previous image",
           carousel_next: "Next image",
           contact_me: "Contact me",
-          footer_copyright: "© 2026 Federico Bertelli. All rights reserved."
+          footer_copyright: "© 2026 Federico Bertelli. All rights reserved.",
+          privacy_link: "Read the Privacy Policy",
+          captcha_consent_text: "Submitting the form requires an anti-spam check (hCaptcha), provided by a third-party service that processes technical data (IP, mouse movements). It will only load if you consent by clicking below.",
+          captcha_consent_btn: "Accept and load hCaptcha"
         }
       };
 
@@ -401,6 +410,45 @@
       });
 
       applyLanguage(currentLang);
+    });
+  </script>
+
+  <!-- 11. Caricamento hCaptcha su consenso esplicito: Web3Forms + hCaptcha vengono iniettati
+       SOLO quando l'utente clicca attivamente sul bottone "Accetta e carica hCaptcha". Prima di
+       quel click, nessuno script o div hCaptcha è presente nella pagina, quindi nessun dato
+       tecnico (IP, movimenti mouse) viene raccolto da hCaptcha. -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const consentBlock = document.getElementById('captcha-consent');
+      const consentBtn = document.getElementById('captcha-consent-btn');
+      const captchaContainer = document.getElementById('captcha-container');
+      let captchaLoaded = false;
+
+      function loadCaptcha() {
+        if (captchaLoaded) return;
+        captchaLoaded = true;
+
+        // Crea il div hCaptcha ora, solo dopo il click esplicito dell'utente
+        const captchaDiv = document.createElement('div');
+        captchaDiv.className = 'h-captcha';
+        captchaDiv.setAttribute('data-captcha', 'true');
+        captchaDiv.setAttribute('data-theme', 'dark');
+        captchaDiv.setAttribute('data-size', 'normal');
+        captchaDiv.setAttribute('data-callback', 'onCaptchaSuccess');
+        captchaDiv.setAttribute('data-expired-callback', 'onCaptchaExpired');
+        captchaContainer.appendChild(captchaDiv);
+
+        // Carica lo script Web3Forms solo ora: individua il div .h-captcha e inizializza hCaptcha
+        const script = document.createElement('script');
+        script.src = 'https://web3forms.com/client/script.js';
+        script.async = true;
+        script.defer = true;
+        document.body.appendChild(script);
+
+        consentBlock.style.display = 'none';
+      }
+
+      consentBtn.addEventListener('click', loadCaptcha);
     });
   </script>
 
