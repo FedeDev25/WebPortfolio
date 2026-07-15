@@ -563,6 +563,28 @@ a:hover {
   }
 }
 
+/* MOBILE: schermi stretti, i bottoni fissi in alto vengono compattati e spostati
+   sotto la social-bar per evitare che escano dalla viewport o si sovrappongano */
+@media (max-width: 40rem) {
+  #back-home,
+  #contact-me,
+  #lang-toggle {
+    top: auto;
+    bottom: 0.75rem;
+    padding: 0.55rem 0.65rem;
+    font-size: 1rem;
+  }
+ 
+  #back-home { right: auto; left: 0.75rem; }
+  #contact-me { right: 4.6rem; }
+  #lang-toggle { right: 0.75rem; }
+ 
+  .scroll-progress-label {
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+}
+
 /* PARTICLE BACKGROUND */
 #particle-bg {
   position: fixed;
