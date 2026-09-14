@@ -276,6 +276,7 @@ a:hover {
 /* VIDEO SHOWCASE */
 .video-showcase {
   margin-top: clamp(2rem, 5vw, 3.125rem);
+  margin-bottom: clamp(2rem, 5vw, 3.125rem);
 }
 
 .video-showcase h3 {
